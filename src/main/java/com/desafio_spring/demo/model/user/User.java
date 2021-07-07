@@ -1,5 +1,6 @@
 package com.desafio_spring.demo.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -12,10 +13,20 @@ public class User {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.followingRelationships = followingRelationships;
+        this.followingRelationships = new ArrayList<>();
     }
 
     public void setType(TypeUser type) {
         this.type = type;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setFollowingRelationshipsFollow(FollowingRelationships userToFollow) {
+        this.followingRelationships.add(userToFollow);
+    }
+
+
 }
