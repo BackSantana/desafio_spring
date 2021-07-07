@@ -1,23 +1,44 @@
 package com.desafio_spring.demo.service;
 
+import com.desafio_spring.demo.exception.UserAlreadyFollowUser;
 import com.desafio_spring.demo.model.user.*;
 import com.desafio_spring.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public ResponseEntity followUser(Long userId, Long userIdToFollow) {
-        User user = userRepository.getUser(userIdToFollow);
-        User user1 = userRepository.getUser(userId);
+    public ResponseEntity followUser(Integer userId, Integer userIdToFollow) {
+        User user = userRepository.getUser(userId);
+        User userToFollow = userRepository.getUser(userIdToFollow);
+        verifyExistUserFollow(user, userToFollow);
 
-        user.setFollowingRelationshipsFollow(new FollowingRelationships(userIdToFollow, TypeFollowingRelationships.FOLLOWED));
-        user1.setFollowingRelationshipsFollow(new FollowingRelationships(userId, TypeFollowingRelationships.FOLLOWER));
+        userRepository.followingRelationshipsFollow(user, userToFollow);
 
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity unfollow(Integer userId, Integer userIdToUnfollow){
+        User user = userRepository.getUser(userId);
+        User userToUnfollow = userRepository.getUser(userIdToUnfollow);
+        userRepository.followingRelationshipsUnfollow(user, userToUnfollow);
+
+        return ResponseEntity.ok().build();
+    }
+
+    public void verifyExistUserFollow(User userId, User userIdToFollow){
+        Optional<FollowingRelationships> user = userId.getFollowingRelationships()
+                .stream()
+                .filter(u -> u.getUser_id() == userIdToFollow.getId())
+                .findFirst();
+
+        if(user.isPresent())
+            throw new UserAlreadyFollowUser(String.format("You already follow the user %s", userIdToFollow));
     }
 }

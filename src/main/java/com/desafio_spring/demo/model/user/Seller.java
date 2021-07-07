@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Seller extends User{
 
-    public Seller(Long id, String name, TypeUser type, List<FollowingRelationships> followingRelationships) {
+    public Seller(Integer id, String name, TypeUser type, List<FollowingRelationships> followingRelationships) {
         super(id, name, TypeUser.SELLER, followingRelationships);
     }
 }

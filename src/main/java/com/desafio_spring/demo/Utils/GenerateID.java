@@ -1,9 +1,9 @@
 package com.desafio_spring.demo.Utils;
 
 public class GenerateID {
-    public static Long id = 1L;
+    public static Integer id = 0;
 
-    public static Long getLastId() {
+    public static Integer getLastId() {
         return id++;
     }
 }

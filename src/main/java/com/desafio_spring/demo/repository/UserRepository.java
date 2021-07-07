@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -17,12 +18,40 @@ public class UserRepository {
     User userClient1 = new Client(GenerateID.getLastId(), "Carlos Santos", TypeUser.CLIENT, usersFollowing);
     User userClient2 = new Client(GenerateID.getLastId(), "Santos Santana", TypeUser.CLIENT, usersFollowing);
 
-    public User getUser(Long id){
+    public User getUser(Integer id){
         addUserTemporary();
         return users.stream()
                 .filter(u -> u.getId() == id)
                 .findFirst()
                 .orElseThrow(()-> new UserDoesNotExistingException(String.format("User [%s] not found", id)));
+    }
+
+    public void followingRelationshipsFollow(User user, User userToFollow){
+        user.setFollowingRelationshipsFollow(new FollowingRelationships(userToFollow.getId(), TypeFollowingRelationships.FOLLOWED));
+        userToFollow.setFollowingRelationshipsFollow(new FollowingRelationships(user.getId(), TypeFollowingRelationships.FOLLOWER));
+    }
+
+    public void followingRelationshipsUnfollow(User user, User userToUnfollow){
+        FollowingRelationships followingRelationships1 = getFollwing(user, userToUnfollow, "S");
+        FollowingRelationships followingRelationships2 = getFollwing(user, userToUnfollow, "N");
+
+        user.getFollowingRelationships().remove(followingRelationships1);
+        userToUnfollow.getFollowingRelationships().remove(followingRelationships2);
+    }
+
+    public FollowingRelationships getFollwing(User user, User userToUnfollow, String order){
+        if(order.equals("S"))
+            return user.getFollowingRelationships()
+                    .stream()
+                    .filter(u -> u.getUser_id() == userToUnfollow.getId())
+                    .findFirst()
+                    .get();
+        else
+            return userToUnfollow.getFollowingRelationships()
+                    .stream()
+                    .filter(u -> u.getUser_id() == user.getId())
+                    .findFirst()
+                    .get();
     }
 
     // Pretendo refatorar isso aqui, não está legal
