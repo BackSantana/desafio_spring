@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository {
@@ -52,6 +53,13 @@ public class UserRepository {
                     .filter(u -> u.getUser_id() == user.getId())
                     .findFirst()
                     .get();
+    }
+
+    public int countFollowers( List<FollowingRelationships> followingRelationships){
+        List<FollowingRelationships> followingRelationshipsAux= followingRelationships.stream()
+                .filter(f -> f.getTypeRelationships().equals(TypeFollowingRelationships.FOLLOWER))
+                .collect(Collectors.toList());
+        return followingRelationshipsAux.size();
     }
 
     // Pretendo refatorar isso aqui, não está legal

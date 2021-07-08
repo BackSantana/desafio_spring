@@ -1,5 +1,6 @@
 package com.desafio_spring.demo.service;
 
+import com.desafio_spring.demo.dto.FollowersDTO;
 import com.desafio_spring.demo.exception.UserAlreadyFollowUser;
 import com.desafio_spring.demo.model.user.*;
 import com.desafio_spring.demo.repository.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +33,13 @@ public class UserService {
 
         return ResponseEntity.ok().build();
     }
+
+    public ResponseEntity<FollowersDTO> followers(Integer userId){
+        User user = userRepository.getUser(userId);
+        int followersCount = userRepository.countFollowers(user.getFollowingRelationships());
+        FollowersDTO followersDTO = new FollowersDTO();
+        return  ResponseEntity.ok().body(followersDTO.userToFollowerCountDTO(user, followersCount));
+     }
 
     public void verifyExistUserFollow(User userId, User userIdToFollow){
         Optional<FollowingRelationships> user = userId.getFollowingRelationships()
