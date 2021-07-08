@@ -17,10 +17,6 @@ public class User {
         this.followingRelationships = new ArrayList<>();
     }
 
-    public void setType(TypeUser type) {
-        this.type = type;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -29,12 +25,16 @@ public class User {
         return name;
     }
 
-    public void setFollowingRelationshipsFollow(FollowingRelationships userToFollow) {
-        this.followingRelationships.add(userToFollow);
+    public TypeUser getType() {
+        return type;
     }
 
     public List<FollowingRelationships> getFollowingRelationships() {
         return followingRelationships;
+    }
+
+    public void setFollowingRelationshipsFollow(FollowingRelationships followingRelationships) {
+        this.followingRelationships.add(followingRelationships);
     }
 
     @Override

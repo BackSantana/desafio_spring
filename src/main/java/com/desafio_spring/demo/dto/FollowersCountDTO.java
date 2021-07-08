@@ -2,19 +2,19 @@ package com.desafio_spring.demo.dto;
 
 import com.desafio_spring.demo.model.user.User;
 
-public class FollowersDTO {
+public class FollowersCountDTO {
 
     private Integer id;
     private String userName;
     private int fallowers_count;
 
-    public FollowersDTO(Integer id, String userName, int fallowers_count) {
+    public FollowersCountDTO(Integer id, String userName, int fallowers_count) {
         this.id = id;
         this.userName = userName;
         this.fallowers_count = fallowers_count;
     }
 
-    public FollowersDTO(){
+    public FollowersCountDTO(){
 
     }
 
@@ -30,8 +30,8 @@ public class FollowersDTO {
         return fallowers_count;
     }
 
-    public FollowersDTO userToFollowerCountDTO(User user, int followersCount){
-        return new FollowersDTO(user.getId(),user.getName(), followersCount);
+    public FollowersCountDTO userToFollowerCountDTO(User user, int followersCount){
+        return new FollowersCountDTO(user.getId(),user.getName(), followersCount);
     }
 
 }
