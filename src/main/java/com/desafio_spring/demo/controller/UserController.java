@@ -2,7 +2,7 @@ package com.desafio_spring.demo.controller;
 
 import com.desafio_spring.demo.model.user.TypeUser;
 import com.desafio_spring.demo.model.user.User;
-import com.desafio_spring.demo.service.UserService;
+import com.desafio_spring.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.desafio_spring.demo.dto;
+package com.desafio_spring.demo.dto.user;
 
 public class FollowerDTO {
     private Integer userId;

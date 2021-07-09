@@ -2,19 +2,18 @@ package com.desafio_spring.demo.model.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class User {
     private Integer id;
     private String name;
     private TypeUser type;
-    private List<FollowingRelationships> followingRelationships;
+    private List<FollowSeller> followSellers;
 
-    public User(Integer id, String name, TypeUser type, List<FollowingRelationships> followingRelationships) {
+    public User(Integer id, String name, TypeUser type, List<FollowSeller> followingRelationships) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.followingRelationships = new ArrayList<>();
+        this.followSellers = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -29,12 +28,12 @@ public class User {
         return type;
     }
 
-    public List<FollowingRelationships> getFollowingRelationships() {
-        return followingRelationships;
+    public List<FollowSeller> getFollowSellers() {
+        return followSellers;
     }
 
-    public void setFollowingRelationshipsFollow(FollowingRelationships followingRelationships) {
-        this.followingRelationships.add(followingRelationships);
+    public void add(FollowSeller followingRelationships) {
+        this.followSellers.add(followingRelationships);
     }
 
     @Override
