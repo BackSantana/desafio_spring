@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -34,8 +36,7 @@ public class UserService {
 
     public ResponseEntity<FollowersCountDTO> followersCount(User user){
         int followersCount = followSellerService.countFollowers(user.getFollowSellers());
-        FollowersCountDTO followersDTO = new FollowersCountDTO();
-        return  ResponseEntity.ok().body(followersDTO.userToFollowerCountDTO(user, followersCount));
+        return  ResponseEntity.ok().body(FollowersCountDTO.userToFollowerCountDTO(user, followersCount));
      }
 
     public void verifyExistUserFollow(User userId, User userIdToFollow){
@@ -46,11 +47,15 @@ public class UserService {
 
     public ResponseEntity<FollowersListDTO> getUserByTypeList(User user, TypeUser typeUser){
         List<FollowSeller> followersList = userRepository.getUserByType(user.getFollowSellers(), typeUser);
-        FollowersListDTO followersListDTO = new FollowersListDTO();
-        return ResponseEntity.ok().body(followersListDTO.userToListByClient(user, followersList));
+        return ResponseEntity.ok().body(FollowersListDTO.userToListByClient(user, followersList));
     }
 
     public User getUser(Integer id){
         return userRepository.getUser(id);
     }
+
+    public void addUserTemporary(){
+        userRepository.addUserTemporary();
+    }
+
 }

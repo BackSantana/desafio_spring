@@ -32,12 +32,12 @@ public class FollowersListDTO {
         return followers;
     }
 
-    public FollowersListDTO userToListByClient(User user, List<FollowSeller> followers){
+    public static FollowersListDTO userToListByClient(User user, List<FollowSeller> followers){
         List<FollowerDTO> followersAux = followingRelationshipsToFollowers(followers);
         return new FollowersListDTO(user.getId(), user.getName(), followersAux);
     }
 
-    public List<FollowerDTO> followingRelationshipsToFollowers(List<FollowSeller> followingRelationships){
+    public static List<FollowerDTO> followingRelationshipsToFollowers(List<FollowSeller> followingRelationships){
         List<FollowerDTO> followers = new ArrayList<>();
         followingRelationships.forEach( f -> followers.add(new FollowerDTO(f.getUser_id(), f.getNome())));
         return followers;

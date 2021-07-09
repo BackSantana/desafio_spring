@@ -23,7 +23,6 @@ public class UserRepository {
     getUser recebe um id e retorna o objeto User cadastrado com esse is. Caso não existe é lançado um throw.
      */
     public User getUser(Integer id){
-        addUserTemporary();
         return users.stream()
                 .filter(u -> u.getId() == id)
                 .findFirst()

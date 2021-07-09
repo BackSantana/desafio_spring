@@ -7,10 +7,7 @@ import com.desafio_spring.demo.service.post.PostService;
 import com.desafio_spring.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/products")
 @RestController
@@ -27,5 +24,11 @@ public class PostController {
         Post post = PostRequestDTO.DtoToPost(requestDTO);
         User user = userService.getUser(requestDTO.getUser_id());
         return postService.creatPost(user, post);
+    }
+
+    @GetMapping("/followed/{userId}/list")
+    public ResponseEntity getListPostByUser(@PathVariable Integer userId){
+        User user = userService.getUser(userId);
+        return postService.getListPostByUser(user);
     }
 }

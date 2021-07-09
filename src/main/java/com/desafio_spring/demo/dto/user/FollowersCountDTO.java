@@ -30,7 +30,7 @@ public class FollowersCountDTO {
         return fallowers_count;
     }
 
-    public FollowersCountDTO userToFollowerCountDTO(User user, int followersCount){
+    public static FollowersCountDTO userToFollowerCountDTO(User user, int followersCount){
         return new FollowersCountDTO(user.getId(),user.getName(), followersCount);
     }
 

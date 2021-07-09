@@ -2,13 +2,14 @@ package com.desafio_spring.demo.dto.post;
 
 import com.desafio_spring.demo.Utils.GenerateID;
 import com.desafio_spring.demo.model.post.Post;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class PostRequestDTO {
-
     private Integer user_id;
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate date;
     private String category;
     private BigDecimal price;
@@ -22,17 +23,7 @@ public class PostRequestDTO {
         this.product = product;
     }
 
-    public PostRequestDTO(){
-
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    public PostRequestDTO(){ }
 
     public String getCategory() {
         return category;
@@ -64,6 +55,14 @@ public class PostRequestDTO {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public static Post DtoToPost(PostRequestDTO postRequest){

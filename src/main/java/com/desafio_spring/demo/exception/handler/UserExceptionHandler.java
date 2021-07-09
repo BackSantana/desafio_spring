@@ -1,9 +1,6 @@
 package com.desafio_spring.demo.exception.handler;
 
-import com.desafio_spring.demo.exception.UserAlreadyFollowUser;
-import com.desafio_spring.demo.exception.UserCannotRegisterPostException;
-import com.desafio_spring.demo.exception.UserDoesNotExistingException;
-import com.desafio_spring.demo.exception.UserException;
+import com.desafio_spring.demo.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +14,11 @@ public class UserExceptionHandler {
             UserAlreadyFollowUser.class,
             UserCannotRegisterPostException.class})
     public ResponseEntity exception(UserException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(value =  {FutureDateException.class,})
+    public ResponseEntity exception(FutureDateException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }

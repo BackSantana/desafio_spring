@@ -13,13 +13,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
      }
 
-    //US 0001
+     //US 0001
     @PostMapping("/{userId}/follow/{userIdToFollow}")
     public ResponseEntity followUser(@PathVariable Integer userId, @PathVariable Integer userIdToFollow){
+        userService.addUserTemporary();
         User user = userService.getUser(userId);
         User userToFollow = userService.getUser(userIdToFollow);
         return this.userService.followUser(user, userToFollow);
