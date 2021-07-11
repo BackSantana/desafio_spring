@@ -47,7 +47,7 @@ public class FollowSellerService {
   Função que faz o follow. No FollowingRelationships é adicionado o tipo do relacionamento.
    */
     public void followingRelationshipsFollow(User user, User userToFollow){
-        user.add(new FollowSeller( userToFollow.getId(), user.getName(), TypeFollowingRelationships.FOLLOWED));
+        user.add(new FollowSeller( userToFollow.getId(), userToFollow.getName(), TypeFollowingRelationships.FOLLOWED));
         userToFollow.add(new FollowSeller( user.getId(), user.getName(), TypeFollowingRelationships.FOLLOWER));
     }
 }

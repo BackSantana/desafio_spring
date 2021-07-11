@@ -12,7 +12,8 @@ public class UserExceptionHandler {
     @ExceptionHandler(value =  {
             UserDoesNotExistingException.class,
             UserAlreadyFollowUser.class,
-            UserCannotRegisterPostException.class})
+            UserCannotRegisterPostException.class,
+            SellerCannotFollowUserException.class})
     public ResponseEntity exception(UserException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }

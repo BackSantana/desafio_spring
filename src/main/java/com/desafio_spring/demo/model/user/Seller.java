@@ -8,7 +8,7 @@ import java.util.List;
 public class Seller extends User{
     private List<Post> posts = new ArrayList<>();
 
-    public Seller(Integer id, String name, TypeUser type, List<FollowSeller> followingRelationships) {
+    public Seller(Integer id, String name, List<FollowSeller> followingRelationships) {
         super(id, name, TypeUser.SELLER, followingRelationships);
     }
 
