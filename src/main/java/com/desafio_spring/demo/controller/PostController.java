@@ -46,4 +46,10 @@ public class PostController {
         User user = userService.getUser(userId);
         return postService.getPostsHasPromo(user);
     }
+
+    @GetMapping("{userId}/countPromo/")
+    public ResponseEntity getCountPromo(@PathVariable Integer userId){
+        User user = userService.getUser(userId);
+        return postService.countPostsPromo(user);
+    }
 }

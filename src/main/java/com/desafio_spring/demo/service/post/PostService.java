@@ -1,5 +1,6 @@
 package com.desafio_spring.demo.service.post;
 
+import com.desafio_spring.demo.dto.post.PostPromoCountDTO;
 import com.desafio_spring.demo.dto.post.PostResponseDTO;
 import com.desafio_spring.demo.dto.post.PostsResponseDTO;
 import com.desafio_spring.demo.dto.post.ProductDTO;
@@ -37,7 +38,7 @@ public class PostService {
 
         ProductDTO productDTO = ProductDTO.productToDTO(post.getProduct());
 
-        if(post.getHasPromo() == null || post.getHasPromo() == false) {
+        if(post.getHasPromo() == false) {
             postResponseDTO = PostResponseDTO.postResponse(post, productDTO);
         } else {
             postResponseDTO = PostResponseDTO.postResponseHasPromo(post, productDTO);
@@ -75,6 +76,11 @@ public class PostService {
         List<PostResponseDTO> postsResponseDTO = PostsResponseDTO.getPostsToPostsHasPromoDTO(posts);
 
         return ResponseEntity.ok().body(PostsResponseDTO.postsToPotsDTO(postsResponseDTO, user.getId()));
+    }
+
+    public ResponseEntity countPostsPromo(User user){
+        List<Post> posts = postRepository.getPostsHasPromo((Seller) user);
+        return ResponseEntity.ok().body(PostPromoCountDTO.postPromoCountDTO(user, posts.size()));
     }
 
         public boolean isSeller(User user){
