@@ -42,17 +42,20 @@ public class PostService {
         return ResponseEntity.ok().body(PostResponseDTO.postResponse(post, productDTO));
     }
 
-    public ResponseEntity getListPostByUser(User user){
+    public ResponseEntity getListPostByUser(User user, String order){
         List<Post> posts = new ArrayList<>();
         List<Seller> followSellers = getUserByType(user.getFollowSellers());
 
         followSellers.forEach(f -> f.getPosts().forEach( post -> posts.add(post)));
 
         List<Post> pots = getPostsTwoWeekAgo(posts);
-
-        Comparator comparator = new DateDescComparator();
         List<PostResponseDTO> postsDTO = PostsResponseDTO.getPostsToPostsResponseDTO(pots);
-        postsDTO.sort(comparator);
+
+
+        if(order.equals("name_asc"))
+            postsDTO.sort(Comparator.comparing(PostResponseDTO::getDate));
+        else if(order.equals("name_desc"))
+            postsDTO.sort(Comparator.comparing(PostResponseDTO::getDate).reversed());
 
         return ResponseEntity.ok().body(PostsResponseDTO.postsToPotsDTO(postsDTO, user.getId()));
     }

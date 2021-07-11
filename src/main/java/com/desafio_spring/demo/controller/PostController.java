@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RequestMapping("/products")
 @RestController
 public class PostController {
@@ -27,8 +29,8 @@ public class PostController {
     }
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity getListPostByUser(@PathVariable Integer userId){
+    public ResponseEntity getListPostByUser(@PathVariable Integer userId, @PathParam("order") String order){
         User user = userService.getUser(userId);
-        return postService.getListPostByUser(user);
+        return postService.getListPostByUser(user, order);
     }
 }
