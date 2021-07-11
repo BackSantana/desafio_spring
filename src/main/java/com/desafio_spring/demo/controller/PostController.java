@@ -33,4 +33,17 @@ public class PostController {
         User user = userService.getUser(userId);
         return postService.getListPostByUser(user, order);
     }
+
+    @PostMapping("/newpromopost")
+    public ResponseEntity creatPostPromo(@RequestBody PostRequestDTO requestDTO){
+        Post post = PostRequestDTO.DtoToPostHasPromo(requestDTO);
+        User user = userService.getUser(requestDTO.getUser_id());
+        return postService.creatPost(user, post);
+    }
+
+    @GetMapping("/{userId}/list/")
+    public ResponseEntity getListPostByUser(@PathVariable Integer userId){
+        User user = userService.getUser(userId);
+        return postService.getPostsHasPromo(user);
+    }
 }

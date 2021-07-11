@@ -11,6 +11,7 @@ public class PostResponseDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer user_id;
     private Integer id_post;
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate date;
     private ProductDTO product;
     private String category;
@@ -35,6 +36,17 @@ public class PostResponseDTO {
         this.category = category;
         this.price = price;
         this.product = product;
+    }
+
+    public PostResponseDTO(Integer user_id, Integer id_post, LocalDate date, ProductDTO product, String category, BigDecimal price, Boolean hasPromo, BigDecimal discount) {
+        this.user_id = user_id;
+        this.id_post = id_post;
+        this.date = date;
+        this.product = product;
+        this.category = category;
+        this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
     }
 
     public PostResponseDTO(){}
@@ -95,6 +107,14 @@ public class PostResponseDTO {
         this.discount = discount;
     }
 
+    public Boolean getHasPromo() {
+        return hasPromo;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
     public static PostResponseDTO postResponse(Post post, ProductDTO productDTO){
         return new PostResponseDTO(
                 post.getUser_id(),
@@ -103,6 +123,18 @@ public class PostResponseDTO {
                 productDTO,
                 post.getCategory(),
                 post.getPrice());
+    }
+
+    public static PostResponseDTO postResponseHasPromo(Post post, ProductDTO productDTO){
+        return new PostResponseDTO(
+                post.getUser_id(),
+                post.getId(),
+                post.getDate(),
+                productDTO,
+                post.getCategory(),
+                post.getPrice(),
+                post.getHasPromo(),
+                post.getDiscount());
     }
 
     public static PostResponseDTO postResponseToList(Post post, ProductDTO productDTO){

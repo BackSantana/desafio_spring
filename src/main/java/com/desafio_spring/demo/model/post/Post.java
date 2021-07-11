@@ -24,6 +24,17 @@ public class Post {
         this.product = product;
     }
 
+    public Post(Integer id, Integer user_id, LocalDate date, String category, BigDecimal price, Boolean hasPromo, BigDecimal discount, Product product) {
+        this.id = id;
+        this.user_id = user_id;
+        this.date = date;
+        this.category = category;
+        this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
+        this.product = product;
+    }
+
     public Integer getId() {
         return id;
     }

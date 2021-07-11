@@ -32,4 +32,11 @@ public class PostsResponseDTO {
         posts.forEach(post -> postsResponseDTO.add(PostResponseDTO.postResponseToList(post, ProductDTO.productToDTO(post.getProduct()))));
         return postsResponseDTO;
     }
+
+    public static List<PostResponseDTO> getPostsToPostsHasPromoDTO(List<Post> posts){
+        List<PostResponseDTO> postsResponseDTO = new ArrayList<>();
+
+        posts.forEach(post -> postsResponseDTO.add(PostResponseDTO.postResponseHasPromo(post, ProductDTO.productToDTO(post.getProduct()))));
+        return postsResponseDTO;
+    }
 }
