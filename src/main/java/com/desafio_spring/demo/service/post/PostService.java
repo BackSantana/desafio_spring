@@ -26,6 +26,7 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    // Faz a criação do post, sendo ele promocional ou não.
     public ResponseEntity creatPost(User user, Post post){
         if(!isSeller(user))
             throw new UserCannotRegisterPostException(String.format("User [ %s ] cannot register post",  user));
@@ -47,6 +48,12 @@ public class PostService {
         return ResponseEntity.ok().body(postResponseDTO);
     }
 
+    /*
+        Pega todos os vendedores que o usuario segue, e retorna os posts de cada um.
+        getuserByType ->  Retorna todos os vendedores que o usuário segue.
+        addPosts -> Carrega todos os posts dos vendedores em uma lista auxiliar.
+        getPostsTwoWeekAgo -> Faz a seleção dos anuncios mais recentes.
+     */
     public ResponseEntity getListPostByUser(User user, String order){
         List<Seller> followSellers = postRepository.getUserByType(user.getFollowSellers());
         List<Post> pots = getPostsTwoWeekAgo(postRepository.addPosts(followSellers));
@@ -65,9 +72,10 @@ public class PostService {
 
         return posts.stream()
                 .filter(post -> post.getDate().isAfter(twoWeekAgo))
-                .filter(post -> post.getDate().isBefore(LocalDate.now()))
+                .filter(post -> post.getDate().isBefore(LocalDate.now().plusDays(1)))
                 .collect(Collectors.toList());
     }
+
     public ResponseEntity getPostsHasPromo(User user) {
         if(!isSeller(user))
             throw new UserCannotRegisterPostException(String.format("User [ %s ] cannot register post",  user));
@@ -83,7 +91,7 @@ public class PostService {
         return ResponseEntity.ok().body(PostPromoCountDTO.postPromoCountDTO(user, posts.size()));
     }
 
-        public boolean isSeller(User user){
+    public boolean isSeller(User user){
         if(user.getType().equals(TypeUser.SELLER))
             return true;
         return false;

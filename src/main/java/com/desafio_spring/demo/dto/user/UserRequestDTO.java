@@ -7,9 +7,9 @@ import java.util.List;
 
 public class UserRequestDTO {
     private String name;
-    private TypeUser type;
+    private String type;
 
-    public UserRequestDTO(String name, TypeUser type) {
+    public UserRequestDTO(String name, String type) {
         this.name = name;
         this.type = type;
     }
@@ -23,11 +23,11 @@ public class UserRequestDTO {
         this.name = name;
     }
 
-    public TypeUser getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(TypeUser type) {
+    public void setType(String type) {
         this.type = type;
     }
 

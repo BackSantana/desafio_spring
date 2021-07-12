@@ -2,6 +2,7 @@ package com.desafio_spring.demo.controller;
 
 import com.desafio_spring.demo.dto.user.UserRequestDTO;
 import com.desafio_spring.demo.dto.user.UserResponseDTO;
+import com.desafio_spring.demo.exception.UnidentifiedUserTypeException;
 import com.desafio_spring.demo.model.user.TypeUser;
 import com.desafio_spring.demo.model.user.User;
 import com.desafio_spring.demo.service.user.UserService;
@@ -26,11 +27,13 @@ public class UserController {
     @PostMapping("/registerUser")
     public ResponseEntity addUser(@RequestBody UserRequestDTO userDTO){
         User user;
-        if(userDTO.getType().equals(TypeUser.SELLER)){
+        if(userDTO.getType().toUpperCase().equals(String.valueOf(TypeUser.SELLER))){
              user = UserRequestDTO.userDtoToSeller(userDTO);
-        }else{
+        }else if(userDTO.getType().toUpperCase().equals(String.valueOf(TypeUser.CLIENT))){
              user = UserRequestDTO.userDtoToClient(userDTO);
-        }
+        }else
+            throw new UnidentifiedUserTypeException(String.format("Unidentified user type [ %s ]", userDTO.getType()));
+
         return ResponseEntity.ok().body(UserResponseDTO.userDtoToUser(userService.addUser(user)));
     }
 
