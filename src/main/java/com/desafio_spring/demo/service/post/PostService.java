@@ -50,11 +50,11 @@ public class PostService {
     public ResponseEntity getListPostByUser(User user, String order){
         List<Seller> followSellers = postRepository.getUserByType(user.getFollowSellers());
         List<Post> pots = getPostsTwoWeekAgo(postRepository.addPosts(followSellers));
-        List<PostResponseDTO> postsDTO = PostsResponseDTO.getPostsToPostsResponseDTO(pots);
+        List<PostResponseDTO> postsDTO = PostsResponseDTO.getPostsToPostsHasPromoDTO(pots);
 
-        if(order.equals("name_asc"))
+        if(order != null && order.equals("date_asc"))
             postsDTO.sort(Comparator.comparing(PostResponseDTO::getDate));
-        else if(order.equals("name_desc"))
+        else if(order != null && order.equals("date_desc"))
             postsDTO.sort(Comparator.comparing(PostResponseDTO::getDate).reversed());
 
         return ResponseEntity.ok().body(PostsResponseDTO.postsToPotsDTO(postsDTO, user.getId()));

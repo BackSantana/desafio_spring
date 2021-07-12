@@ -50,9 +50,9 @@ public class UserService {
     public ResponseEntity<FollowersListDTO> getUserByTypeList(User user, TypeUser typeUser, String orderName){
         List<FollowSeller> followersList = userRepository.getUserByType(user.getFollowSellers(), typeUser);
 
-        if (orderName.equals("name_asc"))
+        if(orderName != null && orderName.equals("name_asc"))
             followersList.sort(Comparator.comparing(FollowSeller::getNome));
-        else if(orderName.equals("name_desc"))
+        else if(orderName != null && orderName.equals("name_desc"))
             followersList.sort(Comparator.comparing(FollowSeller::getNome).reversed());
 
         return ResponseEntity.ok().body(FollowersListDTO.userToListByClient(user, followersList));
